@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  metabase_db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_METABASE}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_METABASE}
+      POSTGRES_DB: ${POSTGRES_DB_METABASE}
+    volumes:
+      - metabase_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3200:3200"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./htmlcov:/app/htmlcov
+
+  metabase:
+    image: metabase/metabase:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - metabase_db
+      - db
+
+volumes:
+  postgres_data:
+  metabase_data:
+    external: true

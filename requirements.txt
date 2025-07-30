@@ -1,0 +1,12 @@
+fastapi
+sqlmodel
+psycopg2-binary
+python-dotenv
+uvicorn
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+python-jose[cryptography]
+passlib[bcrypt]
+uuid
