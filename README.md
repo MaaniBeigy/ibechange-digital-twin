@@ -3,7 +3,7 @@
 
 # iBeChange Digital Twin
 [![License: CC-BY-4.0-International](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](#license)
-
+[![coverage report](docs/coverage.svg)](.logs/coverage.txt)
 # Data model
 
 ![data-model](docs/data_model.svg)

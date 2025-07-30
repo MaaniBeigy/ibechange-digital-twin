@@ -10,3 +10,4 @@ httpx
 python-jose[cryptography]
 passlib[bcrypt]
 uuid
+coverage-badge
