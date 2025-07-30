@@ -1,3 +1,6 @@
+![alt text](docs/IBC-logo.jpg)
+![alt text](docs/eu.png)
+
 # iBeChange Digital Twin
 
 # Data model
