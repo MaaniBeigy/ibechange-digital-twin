@@ -2,7 +2,7 @@
 
 # Data model
 
-[![data-model](docs/data_model.svg)]
+![data-model](docs/data_model.svg)
 
 # Deploy
 
