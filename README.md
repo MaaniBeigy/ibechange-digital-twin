@@ -2,7 +2,7 @@
 
 # Data model
 
-[![data-model](docs/data_model.svg)]([docs\data_model.txt](https://raw.githubusercontent.com/MaaniBeigy/ibechange-digital-twin/refs/heads/main/docs/data_model.txt))
+[![data-model](docs/data_model.svg)]
 
 # Deploy
 
