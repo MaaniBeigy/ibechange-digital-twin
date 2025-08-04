@@ -11,6 +11,7 @@ class RecommendationPlan(SQLModel, table=True):
 
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     user_id: uuid.UUID = Field(index=True, foreign_key="User.id")
+    plan_id: uuid.UUID = Field(index=True, foreign_key="SelectedContent.id")
     recommendation_id: uuid.UUID = Field(index=True, foreign_key="Recommendation.id")
     mission_id: Optional[uuid.UUID] = Field(
         default=None, index=True, foreign_key="Mission.id"

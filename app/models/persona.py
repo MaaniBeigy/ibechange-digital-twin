@@ -13,7 +13,7 @@ class Persona(SQLModel, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str = Field(index=True)
     characteristics: Dict[str, Any] = Field(sa_type=JSONB)
-    models: Optional[List[uuid.UUID]] = None
+    models: Optional[List[uuid.UUID]] = Field(default=None, sa_type=JSONB)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     modified_at: Optional[datetime] = Field(default=None)
     deleted_at: Optional[datetime] = Field(default=None)

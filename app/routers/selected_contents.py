@@ -57,22 +57,23 @@ def create_selected_contents(
             unique_contents = list(unique_contents_dict.values())
 
             def _naive_utc(dt: datetime | None) -> datetime | None:
-                """Strip tzinfo after converting to UTC so DB / JSON timestamps match."""
+                """Strip tzinfo post-conversion to UTC so DB / JSON timestamps match."""
                 if dt is None:
                     return None
                 return dt.astimezone(timezone.utc).replace(tzinfo=None)
 
             def _canonical_contents(raw: list[dict]) -> list[dict]:
-                """Sort by content_id so order differences don’t matter."""
+                """Sort by content_id so order differences don't matter."""
                 return sorted(raw, key=lambda x: x["id"])
 
             incoming_contents = [c.model_dump() for c in unique_contents]
             canonical_incoming = _canonical_contents(incoming_contents)
             start_naive = _naive_utc(content.mission_start_time)
             end_naive = _naive_utc(content.mission_end_time)
-            # Check if SelectedContent with same contents and times already exists
+            # Check if SelectedContent with same plan_id, contents, and times exists
             already_exists = any(
-                _canonical_contents(sc.contents) == canonical_incoming
+                str(sc.id) == str(content.plan_id)
+                and _canonical_contents(sc.contents) == canonical_incoming
                 and _naive_utc(sc.mission_start_time) == start_naive
                 and _naive_utc(sc.mission_end_time) == end_naive
                 and not sc.is_deleted
@@ -80,12 +81,14 @@ def create_selected_contents(
             )
             if already_exists:
                 logger.debug(
-                    f"SelectedContent already exists for user {user_id}, skipping"
+                    "SelectedContent already exists for user "
+                    + f"{user_id} and plan_id={content.plan_id}, skipping"
                 )
                 continue
 
             # Insert new SelectedContent
             db_content = SelectedContent(
+                id=content.plan_id,
                 user_id=user_id,
                 contents=[c.model_dump() for c in unique_contents],
                 mission_start_time=content.mission_start_time,
@@ -94,8 +97,9 @@ def create_selected_contents(
                 is_deleted=False,
             )
             db.add(db_content)
-            logger.debug(f"Added SelectedContent for user {user_id}")
-
+            logger.debug(
+                f"Added SelectedContent for user {user_id} and plan_id={content.plan_id}"
+            )
             # Collect unique mission_ids
             mission_ids: Set[str] = {c.mission_id for c in unique_contents}
             logger.debug(f"Unique mission_ids: {mission_ids}")

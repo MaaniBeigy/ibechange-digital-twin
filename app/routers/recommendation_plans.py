@@ -52,6 +52,7 @@ def get_recommendation_plans(
                 RecommendationPlanItem(
                     content_id=rec.content_id,
                     scheduled_for=plan.scheduled_for,
+                    plan_id=plan.plan_id,
                 )
             )
         # Build the response as a list of RecommendationPlanResponse objects
@@ -73,7 +74,7 @@ def get_recommendation_plans(
         content_missions = {c["id"]: c["mission_id"] for c in content.contents}
         # Generate recommendation plans for each user/content
         new_plans += generate_recommendation_plan(
-            content.user_id, content_missions, start_dt, end_dt, db
+            content.user_id, content_missions, content.id, start_dt, end_dt, db
         )
 
     # Commit all new plans to the database
@@ -94,7 +95,9 @@ def get_recommendation_plans(
         content_id = recommendation_map.get(plan.recommendation_id)
         user_plans[plan.user_id].append(
             RecommendationPlanItem(
-                content_id=content_id, scheduled_for=plan.scheduled_for
+                content_id=content_id,
+                scheduled_for=plan.scheduled_for,
+                plan_id=plan.plan_id,
             )
         )
     response = [

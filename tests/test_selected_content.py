@@ -85,6 +85,7 @@ def _build_payload_single_user():
             ],
             "mission_start_time": "2025-07-29T13:00:03+00:00",
             "mission_end_time": "2025-08-05T13:00:03+00:00",
+            "plan_id": "7b8a9f54-801a-4ab0-afe0-06f100441793",
         }
     }
 
@@ -97,6 +98,7 @@ def _build_payload_two_users():
         "contents": [{"id": "NRc20", "type": "recommendation", "mission_id": "NM31"}],
         "mission_start_time": "2025-07-29T13:00:03+00:00",
         "mission_end_time": "2025-08-05T13:00:03+00:00",
+        "plan_id": "2b8a9f54-801a-4ab0-afe0-06f100441793",
     }
     return payload
 
@@ -148,6 +150,7 @@ def test_posting_same_payload_twice_is_idempotent_1(client):
                 ],
                 "mission_start_time": "2025-07-07T10:00:33.919000",
                 "mission_end_time": "2025-07-14T10:00:33.919000",
+                "plan_id": "9b8a9f54-801a-4ab0-afe0-06f100441793",
             },
         },
     )
@@ -167,6 +170,7 @@ def test_posting_same_payload_twice_is_idempotent_1(client):
                 ],
                 "mission_start_time": "2025-07-07T10:00:33.919000",
                 "mission_end_time": "2025-07-14T10:00:33.919000",
+                "plan_id": "9b8a9f54-801a-4ab0-afe0-06f100441793",
             },
         },
     )
@@ -194,6 +198,7 @@ def test_posting_same_payload_twice_is_idempotent_2(client):
                 ],
                 "mission_start_time": "2025-07-29T13:00:03+00:00",
                 "mission_end_time": "2025-08-05T13:00:03+00:00",
+                "plan_id": "1b8a9f54-801a-4ab0-afe0-06f100441794",
             }
         },
     )
@@ -208,6 +213,7 @@ def test_posting_same_payload_twice_is_idempotent_2(client):
                 ],
                 "mission_start_time": "2025-07-29T13:00:03+00:00",
                 "mission_end_time": "2025-08-05T13:00:03+00:00",
+                "plan_id": "1b8a9f54-801a-4ab0-afe0-06f100441794",
             }
         },
     )
@@ -248,6 +254,7 @@ def test_recommendation_mission_append(client):
             ],
             "mission_start_time": "2025-07-29T13:00:03+00:00",
             "mission_end_time": "2025-08-05T13:00:03+00:00",
+            "plan_id": "4b4a9f54-801a-4ab0-afe0-06f100441794",
         }
     }
 
@@ -258,6 +265,7 @@ def test_recommendation_mission_append(client):
             ],
             "mission_start_time": "2025-07-29T13:00:03+00:00",
             "mission_end_time": "2025-08-05T13:00:03+00:00",
+            "plan_id": "2b4a9f54-801a-4ab0-afe0-06f108441797",
         }
     }
 
@@ -282,6 +290,7 @@ def test_selected_content_null_timestamps_idempotent(client):
             "contents": [{"id": "NRz1", "type": "resource", "mission_id": "NM40"}],
             "mission_start_time": None,
             "mission_end_time": None,
+            "plan_id": "7b4a9f57-801a-4ab0-afe0-06f100441797",
         }
     }
 

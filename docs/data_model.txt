@@ -77,6 +77,7 @@ class Recommendation {
 class RecommendationPlan {
   -id: uuid
   -user_id: uuid
+  -plan_id: uuid
   -recommendation_id: uuid
   -mission_id: uuid
   -scheduled_for: datetime
@@ -92,7 +93,7 @@ class Persona {
   -id: uuid
   -name: str
   -characteristics: Dict[str, Any]
-  -models: List[uuid]
+  -models:Optional[List[uuid]]
   --
   +init()
 }

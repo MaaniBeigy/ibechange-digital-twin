@@ -8,6 +8,7 @@ from pydantic import BaseModel
 class RecommendationPlanItem(BaseModel):
     content_id: str
     scheduled_for: datetime
+    plan_id: UUID
 
 
 class RecommendationPlanResponse(BaseModel):
